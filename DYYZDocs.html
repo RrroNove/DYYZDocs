@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="都匀一中新生生活指南">
+<title>DYYZDocs</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --text: #1f2430;
+    --text-muted: #5b6472;
+    --primary: #2b5ce6;
+    --primary-dark: #1f4ac7;
+    --accent: #0f9d8f;
+    --border: #e6e8ee;
+    --shadow: 0 6px 24px rgba(31, 36, 48, .08);
+    --radius: 14px;
+    --maxw: 1080px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    margin-left: 240px; /* 为左侧导航留出空间 */
+    transition: margin-left .3s ease;
+  }
+
+  a { color: var(--primary); text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- 左侧导航栏 ---------- */
+  nav {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+    width: 240px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    transition: transform .3s ease;
+  }
+  nav .inner {
+    height: 100%; padding: 32px 20px;
+    display: flex; flex-direction: column; align-items: stretch;
+    overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  nav .inner::-webkit-scrollbar { width: 6px; }
+  nav .inner::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .nav-head { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+  .logo span { color: var(--primary); }
+  .nav-tag {
+    margin-top: 4px; font-size: .72rem; color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+  .nav-links { list-style: none; display: flex; flex-direction: column; gap: 4px; margin-top: 36px; }
+  .nav-links a {
+    display: block; padding: 11px 14px; border-radius: 10px;
+    color: var(--text-muted); font-size: .95rem; transition: all .2s;
+  }
+  .nav-links a:hover { color: var(--primary); background: #eef1ff; }
+  .nav-sublinks {
+    list-style: none; margin: 2px 0 8px 14px; padding-left: 12px;
+    border-left: 1px solid var(--border);
+  }
+  .nav-sublinks a {
+    display: block; padding: 6px 12px; border-radius: 8px;
+    font-size: .85rem; color: var(--text-muted); transition: all .2s;
+  }
+  .nav-sublinks a:hover { color: var(--primary); background: #f0f3ff; }
+
+  /* 侧边栏可折叠分组 */
+  .nav-group > .nav-sublinks { display: none; }
+  .nav-group.open > .nav-sublinks { display: block; }
+  .nav-group-head { display: flex; align-items: center; gap: 4px; }
+  .nav-group-head > a { flex: 1; }
+  .nav-group-toggle {
+    background: none; border: none; cursor: pointer; flex-shrink: 0;
+    color: var(--text-muted); font-size: .75rem; padding: 10px 10px;
+    border-radius: 8px; line-height: 1; transition: all .2s;
+  }
+  .nav-group-toggle:hover { color: var(--primary); background: var(--bg); }
+  .nav-group.open > .nav-group-head .nav-group-toggle { transform: rotate(90deg); }
+
+  /* 侧边栏整体收起/展开 */
+  .nav-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); }
+  .sidebar-collapse {
+    display: none; width: 100%; padding: 10px; border: none; background: none; cursor: pointer;
+    color: var(--text-muted); border-radius: 8px; font-size: .88rem;
+    align-items: center; justify-content: center; gap: 6px; transition: all .2s;
+  }
+  .sidebar-collapse:hover { color: var(--primary); background: var(--bg); }
+  .sidebar-open {
+    display: none; align-items: center; justify-content: center;
+    position: fixed; top: 14px; left: 14px; z-index: 110;
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 1.1rem; color: var(--text); box-shadow: var(--shadow); cursor: pointer;
+  }
+  @media (min-width: 769px) {
+    .sidebar-collapse { display: flex; }
+    body.nav-collapsed .sidebar-open { display: flex; }
+    body.nav-collapsed { margin-left: 0; }
+    body.nav-collapsed nav { transform: translateX(-100%); }
+  }
+
+  /* 桌面端隐藏:汉堡按钮 / 关闭按钮 / 遮罩层(移动端用) */
+  .hamburger, .nav-close { display: none; background: none; border: none; cursor: pointer; }
+  .overlay { display: none; position: fixed; inset: 0; z-index: 95; background: rgba(0,0,0,.35); }
+  .overlay.show { display: block; }
+
+  /* ---------- Hero ---------- */
+  header.hero {
+    padding: 90px 0 70px;
+    text-align: center;
+  }
+  .avatar {
+    width: 110px; height: 110px; margin: 0 auto 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 2.6rem; font-weight: 700;
+    box-shadow: var(--shadow);
+  }
+  .hero h1 { font-size: 2.6rem; letter-spacing: .5px; }
+  .hero .subtitle { margin-top: 12px; font-size: 1.2rem; color: var(--text-muted); }
+  .hero .intro { max-width: 660px; margin: 20px auto 0; color: var(--text-muted); }
+  .hero-actions { margin-top: 32px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 12px 28px; border-radius: 999px;
+    font-size: .98rem; font-weight: 600; transition: all .2s; cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+  .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+
+  /* ---------- 通用区块 ---------- */
+  section { padding: 80px 0; }
+  .section-title {
+    text-align: center; font-size: 1.9rem; margin-bottom: 14px; font-weight: 700;
+  }
+  .section-sub {
+    text-align: center; color: var(--text-muted); max-width: 560px;
+    margin: 0 auto 48px; font-size: .98rem;
+  }
+
+  /* ---------- 小板块标题(课程建议内) ---------- */
+  .sub-title {
+    text-align: center; font-size: 1.35rem; font-weight: 700;
+    margin: 56px 0 8px; letter-spacing: .5px;
+  }
+  .sub-title:first-of-type { margin-top: 0; }
+  .sub-title .num { color: var(--primary); margin-right: 8px; }
+  .sub-sub {
+    text-align: center; color: var(--text-muted); max-width: 560px;
+    margin: 0 auto 36px; font-size: .95rem;
+  }
+
+  /* ---------- 正文:副标题 + 内容 ---------- */
+  .plain-text { max-width: 800px; margin: 0 auto; }
+  .plain-text h4 {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 1.05rem; font-weight: 700; margin: 22px 0 4px;
+  }
+  .plain-text h4::before {
+    content: ""; width: 4px; height: 1em; border-radius: 2px;
+    background: var(--primary); flex-shrink: 0;
+  }
+  .plain-text h4:first-child { margin-top: 0; }
+  .plain-text p { margin-bottom: 16px; font-size: .97rem; line-height: 1.9; color: var(--text); }
+
+  /* ---------- 页脚 ---------- */
+  footer { padding: 32px 0; text-align: center; color: var(--text-muted); font-size: .88rem; border-top: 1px solid var(--border); background: var(--surface); }
+
+  /* ---------- 滚动进入动画 ---------- */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width: 768px) {
+    body { margin-left: 0; }
+
+    /* 抽屉式侧边导航 */
+    nav {
+      width: 260px; transform: translateX(-100%);
+      transition: transform .3s ease;
+    }
+    nav.open { transform: translateX(0); box-shadow: 6px 0 24px rgba(0,0,0,.12); }
+    .nav-links { margin-top: 24px; }
+
+    /* 悬浮的打开按钮 */
+    .hamburger {
+      display: flex; align-items: center; justify-content: center;
+      position: fixed; top: 14px; left: 14px; z-index: 110;
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      font-size: 1.3rem; color: var(--text); box-shadow: var(--shadow);
+    }
+    /* 侧边栏内的关闭按钮 */
+    .nav-close {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 8px;
+      font-size: 1rem; color: var(--text-muted);
+    }
+    .nav-close:hover { color: var(--text); background: var(--bg); }
+
+    header.hero { padding: 100px 0 60px; }
+    .hero h1 { font-size: 2rem; }
+    .section-title { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 左侧导航栏 ===== -->
+<nav id="sideNav">
+  <div class="inner">
+    <div class="nav-head">
+      <a href="#top" class="logo">DYYZ<span>Docs</span></a>
+      <button class="nav-close" onclick="closeNav()" aria-label="关闭菜单">✕</button>
+    </div>
+    <div class="nav-tag">都匀一中 · 新生指南</div>
+    <ul class="nav-links" id="navLinks">
+      <li class="nav-group">
+        <div class="nav-group-head">
+          <a href="#preread">看前须知</a>
+          <button class="nav-group-toggle" onclick="toggleGroup(this)" aria-label="展开">▸</button>
+        </div>
+        <ul class="nav-sublinks">
+          <li><a href="#preread-audience">这份指南是给谁的</a></li>
+          <li><a href="#preread-accuracy">信息准确性</a></li>
+          <li><a href="#preread-howto">使用建议</a></li>
+        </ul>
+      </li>
+      <li class="nav-group">
+        <div class="nav-group-head">
+          <a href="#essentials">新生须知</a>
+          <button class="nav-group-toggle" onclick="toggleGroup(this)" aria-label="展开">▸</button>
+        </div>
+        <ul class="nav-sublinks">
+          <li><a href="#es-report">报到</a></li>
+          <li><a href="#es-military">军训</a></li>
+          <li><a href="#es-uniform">三色衣</a></li>
+          <li><a href="#es-course">课程</a></li>
+          <li><a href="#es-subject">选科</a></li>
+          <li><a href="#es-class">分班</a></li>
+          <li><a href="#es-exam">考试</a></li>
+        </ul>
+      </li>
+      <li class="nav-group open">
+        <div class="nav-group-head">
+          <a href="#courses">课程建议</a>
+          <button class="nav-group-toggle" onclick="toggleGroup(this)" aria-label="折叠">▾</button>
+        </div>
+        <ul class="nav-sublinks">
+          <li class="nav-group">
+            <div class="nav-group-head">
+              <a href="#course-subjects">科目概览</a>
+              <button class="nav-group-toggle" onclick="toggleGroup(this)" aria-label="展开">▸</button>
+            </div>
+            <ul class="nav-sublinks">
+              <li><a href="#sub-yuwen">语文</a></li>
+              <li><a href="#sub-shuxue">数学</a></li>
+              <li><a href="#sub-yingyu">英语</a></li>
+              <li><a href="#sub-wuli">物理</a></li>
+              <li><a href="#sub-huaxue">化学</a></li>
+              <li><a href="#sub-shengwu">生物</a></li>
+              <li><a href="#sub-zhengzhi">政治</a></li>
+              <li><a href="#sub-lishi">历史</a></li>
+              <li><a href="#sub-dili">地理</a></li>
+            </ul>
+          </li>
+          <li><a href="#course-select">选课建议</a></li>
+          <li><a href="#course-score">赋分制度</a></li>
+        </ul>
+      </li>
+      <li class="nav-group">
+        <div class="nav-group-head">
+          <a href="#life">校园生活</a>
+          <button class="nav-group-toggle" onclick="toggleGroup(this)" aria-label="展开">▸</button>
+        </div>
+        <ul class="nav-sublinks">
+          <li><a href="#life-canteen">食堂与餐饮</a></li>
+          <li><a href="#life-dorm">宿舍生活</a></li>
+          <li><a href="#life-day">走读</a></li>
+          <li><a href="#life-schedule">作息时间</a></li>
+          <li><a href="#life-sports">运动场地</a></li>
+          <li><a href="#life-club">社团与活动</a></li>
+          <li><a href="#life-library">图书馆</a></li>
+        </ul>
+      </li>
+      <li class="nav-group">
+        <div class="nav-group-head">
+          <a href="#faq">常见问题</a>
+          <button class="nav-group-toggle" onclick="toggleGroup(this)" aria-label="展开">▸</button>
+        </div>
+        <ul class="nav-sublinks">
+          <li><a href="#faq-report">报到当天需要带什么?</a></li>
+          <li><a href="#faq-military">军训持续多久?</a></li>
+          <li><a href="#faq-dorm">住宿如何分配?</a></li>
+          <li><a href="#faq-xuanke">新高考如何选科?</a></li>
+          <li><a href="#faq-canteen">食堂如何收费?</a></li>
+          <li><a href="#faq-help">遇到问题找谁?</a></li>
+        </ul>
+      </li>
+      <li class="nav-group">
+        <div class="nav-group-head">
+          <a href="#about-us">关于我们</a>
+          <button class="nav-group-toggle" onclick="toggleGroup(this)" aria-label="展开">▸</button>
+        </div>
+        <ul class="nav-sublinks">
+          <li><a href="#au-qqgroup">QQ群</a></li>
+          <li><a href="#au-editor">编辑人QQ</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-foot">
+      <button class="sidebar-collapse" onclick="toggleSidebar()" aria-label="收起侧边栏">« 收起侧边栏</button>
+    </div>
+  </div>
+</nav>
+
+<!-- 移动端:打开按钮 + 遮罩;桌面端:侧边栏收起后浮现的展开按钮 -->
+<button class="hamburger" onclick="openNav()" aria-label="打开菜单">☰</button>
+<button class="sidebar-open" onclick="toggleSidebar()" aria-label="展开侧边栏">»</button>
+<div class="overlay" id="overlay" onclick="closeNav()"></div>
+
+<!-- ===== Hero ===== -->
+<header class="hero" id="top">
+  <div class="container">
+    <div class="avatar">🎓</div>
+    <h1>欢迎来到都匀一中</h1>
+    <p class="subtitle">DYYZDocs · 新生生活指导与课程建议</p>
+    <p class="intro">为初入都匀一中的你整理的一份学习与生活指南:从报到注册到新高考选科,从食堂宿舍到社团活动,一站式解答你的大多数疑问。</p>
+    <div class="hero-actions">
+      <a href="#preread" class="btn btn-primary">开始阅读指南</a>
+      <a href="#faq" class="btn btn-ghost">查看常见问题</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 看前须知 ===== -->
+<section id="preread">
+  <div class="container">
+    <h2 class="section-title">看前须知</h2>
+    <p class="section-sub">开始阅读之前,先了解这份指南的定位与注意事项。</p>
+    <div class="plain-text">
+      <h4 id="preread-audience">这份指南是给谁的</h4>
+      <p>本指南面向都匀一中新生，同时欢迎在校生进行参考对比。</p>
+      <h4 id="preread-accuracy">信息准确性</h4>
+      <p>指南内容基于往届经验与公开信息整理,可能存在出入或更新滞后。涉及报到安排、选科政策、作息时间等具体事项,请以学校官方通知为准。</p>
+      <h4 id="preread-howto">使用建议</h4>
+      <p>建议先浏览左侧目录,快速了解指南结构;需要时再根据导航定位到具体板块。遇到与实际情况不符的地方,欢迎通过文末联系方式反馈。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 新生须知 ===== -->
+<section id="essentials">
+  <div class="container">
+    <h2 class="section-title">新生须知</h2>
+    <p class="section-sub">入学前需要了解的证件、纪律与注意事项。</p>
+    <div class="plain-text">
+      <h4 id="es-report">报到</h4>
+      <p>入学报到一般在开学前进行,请留意学校通知的具体时间、地点与流程。当天携带录取通知书、身份证或户口本复印件、团员档案等材料,按指引完成报到、入住与领取生活用品。</p>
+      <h4 id="es-military">军训</h4>
+      <p>军训是入学第一课,通常持续一周左右。按时参加、听从指挥,建议备好防晒用品、水壶和舒适的运动鞋,训练中身体不适要及时向教官或老师报告。</p>
+      <h4 id="es-uniform">三色衣</h4>
+      <p>三色衣是学校在校学生的一种着装规范,不同颜色对应不同身份或年级,需按学校要求正确穿着与保管。具体款式、穿着场合及相关规定以学校最新通知为准。</p>
+      <h4 id="es-course">课程</h4>
+      <p>高一课程包括语文、数学、外语等必修科目,以及新高考下的其他科目。课程进度比初中明显加快,建议尽早适应节奏,重视课堂效率与课后预习复习。</p>
+      <h4 id="es-subject">选科</h4>
+      <p>贵州实行新高考"3+1+2"模式:语数外为必考,再从物理、历史中选择 1 门作为首选科目,从政治、地理、化学、生物中选择 2 门作为再选科目。建议结合兴趣、优势学科与目标专业方向综合决定。</p>
+      <h4 id="es-class">分班</h4>
+      <p>入学初会进行分班,通常综合参考入学成绩等因素;选科确定后可能再次重新分班。请以学校通知为准,不必过度焦虑,分班只是开始,后续的努力更重要。</p>
+      <h4 id="es-exam">考试</h4>
+      <p>高中阶段主要有月考、期中、期末等考试。成绩可用于检验学习效果、了解自身排名,也为选科提供参考。认真对待每一次考试,及时复盘总结。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 课程建议 ===== -->
+<section id="courses">
+  <div class="container">
+    <h2 class="section-title">课程建议</h2>
+    <p class="section-sub">新高考下,了解科目、学会选科、看懂赋分,才能少走弯路。</p>
+
+    <!-- 1. 科目概览 -->
+    <h3 class="sub-title" id="course-subjects"><span class="num">01</span>科目概览 · 9 大学科</h3>
+    <p class="sub-sub">九大科目的学习特点与建议,帮助你快速建立学科认知。</p>
+    <div class="plain-text">
+      <h4 id="sub-yuwen">语文</h4>
+      <p>语言与文字的艺术,积累与表达并重。这门学科靠日积月累,很难临时突击,建议坚持阅读与写作,循序渐进地提升语感与表达能力。</p>
+      <h4 id="sub-shuxue">数学</h4>
+      <p>区分度最高的科目,强调逻辑思维与运算能力。学习上要重视概念理解,做好错题整理与题型归纳,循序渐进地建立知识体系。</p>
+      <h4 id="sub-yingyu">英语</h4>
+      <p>以词汇为基石,听说读写缺一不可。建议坚持每日阅读输入,利用碎片时间积累词汇,听力与口语也要常练不辍。</p>
+      <h4 id="sub-wuli">物理</h4>
+      <p>对抽象思维要求较高,重在理解物理过程与规律。公式不只是记忆,更要会推导、会应用,学习时多从模型和实际场景入手。</p>
+      <h4 id="sub-huaxue">化学</h4>
+      <p>知识点零碎,理解与记忆并重。方程式与实验是常考的重点,建议在理解原理的基础上反复练习,逐步建立清晰的知识网络。</p>
+      <h4 id="sub-shengwu">生物</h4>
+      <p>一门回归教材的学科,细节非常多。概念、图像与过程要反复翻看、及时巩固,扎实的基础是取得高分的前提。</p>
+      <h4 id="sub-zhengzhi">政治</h4>
+      <p>紧密联系时事热点,对术语规范与逻辑条理要求高。学习时要多关注新闻时事,学会用学科语言有条理地分析和表达观点。</p>
+      <h4 id="sub-lishi">历史</h4>
+      <p>重在时间线的梳理与史实的理解,强调材料分析与历史思维。建议按时间轴整理脉络,多读史料,培养"论从史出"的意识。</p>
+      <h4 id="sub-dili">地理</h4>
+      <p>自然与人文相结合,图表题是重点。建议强化图表判读与区域分析的训练,把零散的知识放到具体区域中去理解记忆。</p>
+    </div>
+
+    <!-- 2. 选课建议 -->
+    <h3 class="sub-title" id="course-select"><span class="num">02</span>选课建议</h3>
+    <p class="sub-sub">"3+1+2"中,"1"要在物理与历史之间二选一,这是最关键的一步。</p>
+    <div class="plain-text">
+      <h4>物理方向</h4>
+      <p>面向理工、医学、农学等大多有选科要求的专业,适合逻辑思维强、理科基础好的同学。常搭配"物理+化学"这类专业覆盖率高的组合,将来填报志愿时选择面更宽。</p>
+      <h4>历史方向</h4>
+      <p>以人文、社科、语言类专业为主,适合记忆与文字表达有优势的同学。组合选择较为灵活,竞争分布相对均衡,同样能通往不错的专业与高校。</p>
+      <h4>选科原则</h4>
+      <p>贵州省实行新高考"3+1+2"模式。选科前建议结合个人兴趣、优势学科与目标专业方向综合决定,不要盲目跟风"热门组合"。选科一旦确定中途调整成本较高,请认真对待选科宣讲与咨询环节。</p>
+    </div>
+
+    <!-- 3. 赋分制度 -->
+    <h3 class="sub-title" id="course-score"><span class="num">03</span>赋分制度</h3>
+    <p class="sub-sub">只有"再选科目"(政治、地理、化学、生物)按等级赋分计入高考总分。</p>
+    <div class="plain-text">
+      <h4>计分方式</h4>
+      <p>高考中,语文、数学、外语与首选科目(物理或历史)按原始分直接计入总分;只有再选科目(政治、地理、化学、生物)实行等级赋分,依据的是全省考生排名而非卷面分。</p>
+      <h4>等级划分</h4>
+      <p>赋分按排名比例划分为五个等级:前 15% 为 A 档,赋分区间 100~86 分;前 50% 为 B 档,85~71 分;前 85% 为 C 档,70~56 分;前 98% 为 D 档,55~41 分;最后 2% 为 E 档,40~30 分,赋分下限为 30 分。</p>
+      <h4>排名决定赋分</h4>
+      <p>也就是说,赋分结果取决于你在同科考生中的相对位置,而不只是卷面分数。因此选科时也要考虑同科考生的整体水平,合理评估自身优势。以上比例与区间为通用参考,请以贵州省教育考试院最新公布为准。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 校园生活 ===== -->
+<section id="life">
+  <div class="container">
+    <h2 class="section-title">校园生活</h2>
+    <p class="section-sub">吃、住、行、玩,提前了解,从容入学。</p>
+    <div class="plain-text">
+      <h4 id="life-canteen">食堂与餐饮</h4>
+      <p>介绍校内食堂分布、菜品种类与价格区间,以及充值、打饭的注意事项。</p>
+      <h4 id="life-dorm">宿舍生活</h4>
+      <p>说明宿舍几人间、床铺尺寸、基本设施与用电用水规定、熄灯时间等。</p>
+      <h4 id="life-day">走读</h4>
+      <p>家庭住址较近的同学可申请走读,通常需家长同意并办理相关手续,向班主任或政教处提交申请。走读生应注意上下学安全,严格遵守作息时间,不迟到不早退。</p>
+      <h4 id="life-schedule">作息时间</h4>
+      <p>列出一天的作息安排:早读、上课、午休、晚自习与就寝时间节点。</p>
+      <h4 id="life-sports">运动场地</h4>
+      <p>介绍操场、篮球场、羽毛球场、体育馆等场地的开放时间与使用规则。</p>
+      <h4 id="life-club">社团与活动</h4>
+      <p>学生会、各类社团与校园活动的纳新时间和参与方式,丰富课余生活。</p>
+      <h4 id="life-library">图书馆</h4>
+      <p>图书馆开放时间、借阅规则与自习座位管理,学会用好这一资源。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 常见问题 ===== -->
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title">常见问题</h2>
+    <p class="section-sub">新生最常问的问题与解答。</p>
+    <div class="plain-text">
+      <h4 id="faq-report">报到当天需要带什么?</h4>
+      <p>一般需要:录取通知书、身份证/户口本复印件、团员档案、个人生活用品(被褥是否统一发放请以学校通知为准)、换洗衣物与常用药品。具体清单以录取通知书内说明为准。</p>
+      <h4 id="faq-military">军训持续多久?需要准备什么?</h4>
+      <p>通常为一周左右,具体以学校安排为准。建议准备:防晒霜、水壶、舒适的运动鞋、创可贴、常用药,以及良好的体能储备。</p>
+      <h4 id="faq-dorm">住宿如何分配?可以走读吗?</h4>
+      <p>宿舍一般按班级/性别集中分配,入住后按床位安排即可。走读政策视学校与年级管理规定而定,有需要可向班主任或政教处咨询申请。</p>
+      <h4 id="faq-xuanke">新高考如何选科?</h4>
+      <p>贵州实行"3+1+2"模式:语数外为必考,再从物理/历史中选择 1 门,从政、地、化、生中选择 2 门。建议结合兴趣、成绩与目标专业的选科要求综合决定。</p>
+      <h4 id="faq-canteen">食堂如何收费?可以点外卖吗?</h4>
+      <p>通常使用校园卡/饭卡充值消费,价格公开透明。关于外卖与手机使用,各校规定不一,请遵守学校纪律要求,以班主任通知为准。</p>
+      <h4 id="faq-help">遇到学习或生活问题可以找谁?</h4>
+      <p>学习问题先找任课老师或班主任;心理与情绪问题可联系学校心理辅导室;生活问题(宿舍、饭卡等)可找宿管或相关后勤部门。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 关于我们 ===== -->
+<section id="about-us">
+  <div class="container">
+    <h2 class="section-title">关于我们</h2>
+    <p class="section-sub">加入我们的交流群,随时提问与交流。</p>
+    <div class="plain-text">
+      <h4 id="au-qqgroup">QQ群</h4>
+      <p>都匀一中新生交流群,群内学长学姐在线答疑,也会同步发布指南更新通知。<br>群号:<b>请填写 QQ 群号</b></p>
+      <h4 id="au-editor">编辑人QQ</h4>
+      <p>本指南由热心同学整理,如有疑问或建议可私聊编辑人。<br>编辑人QQ:<b>请填写编辑人 QQ 号</b></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 DYYZDocs · 为都匀一中新生编写的生活与课程指南
+</footer>
+
+<script>
+  // 侧边栏整体收起/展开(桌面端)
+  function toggleSidebar() {
+    document.body.classList.toggle('nav-collapsed');
+  }
+
+  // 侧边栏分组展开/收起
+  function toggleGroup(btn) {
+    const group = btn.closest('.nav-group');
+    group.classList.toggle('open');
+    btn.setAttribute('aria-label', group.classList.contains('open') ? '折叠' : '展开');
+  }
+
+  // 移动端抽屉菜单
+  function openNav() {
+    document.getElementById('sideNav').classList.add('open');
+    document.getElementById('overlay').classList.add('show');
+  }
+  function closeNav() {
+    document.getElementById('sideNav').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  // 点击导航链接后收起移动端菜单
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', closeNav);
+  });
+
+  // 滚动进入动画
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
