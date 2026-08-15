@@ -1,0 +1,228 @@
+:root {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --text: #1f2430;
+  --text-muted: #5b6472;
+  --primary: #2b5ce6;
+  --primary-dark: #1f4ac7;
+  --accent: #0f9d8f;
+  --border: #e6e8ee;
+  --shadow: 0 6px 24px rgba(31, 36, 48, .08);
+  --radius: 14px;
+  --maxw: 1080px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  margin-left: 240px; /* 为左侧导航留出空间 */
+  transition: margin-left .3s ease;
+}
+
+a { color: var(--primary); text-decoration: none; }
+img { max-width: 100%; display: block; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+/* ---------- 左侧导航栏 ---------- */
+nav {
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+  width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  transition: transform .3s ease;
+}
+nav .inner {
+  height: 100%; padding: 32px 20px;
+  display: flex; flex-direction: column; align-items: stretch;
+  overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+}
+nav .inner::-webkit-scrollbar { width: 6px; }
+nav .inner::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.nav-head { display: flex; align-items: center; justify-content: space-between; }
+.logo { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+.logo span { color: var(--primary); }
+.nav-tag {
+  margin-top: 4px; font-size: .72rem; color: var(--text-muted);
+  letter-spacing: 1px;
+}
+.nav-links { list-style: none; display: flex; flex-direction: column; gap: 4px; margin-top: 36px; }
+.nav-links a {
+  display: block; padding: 11px 14px; border-radius: 10px;
+  color: var(--text-muted); font-size: .95rem; transition: all .2s;
+}
+.nav-links a:hover { color: var(--primary); background: #eef1ff; }
+.nav-sublinks {
+  list-style: none; margin: 2px 0 8px 14px; padding-left: 12px;
+  border-left: 1px solid var(--border);
+}
+.nav-sublinks a {
+  display: block; padding: 6px 12px; border-radius: 8px;
+  font-size: .85rem; color: var(--text-muted); transition: all .2s;
+}
+.nav-sublinks a:hover { color: var(--primary); background: #f0f3ff; }
+
+/* 侧边栏可折叠分组 */
+.nav-group > .nav-sublinks { display: none; }
+.nav-group.open > .nav-sublinks { display: block; }
+.nav-group-head { display: flex; align-items: center; gap: 4px; }
+.nav-group-head > a { flex: 1; }
+.nav-group-toggle {
+  background: none; border: none; cursor: pointer; flex-shrink: 0;
+  color: var(--text-muted); font-size: .75rem; padding: 10px 10px;
+  border-radius: 8px; line-height: 1; transition: all .2s;
+}
+.nav-group-toggle:hover { color: var(--primary); background: var(--bg); }
+.nav-group.open > .nav-group-head .nav-group-toggle { transform: rotate(90deg); }
+
+/* 侧边栏整体收起/展开 */
+.nav-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); }
+.sidebar-collapse {
+  display: none; width: 100%; padding: 10px; border: none; background: none; cursor: pointer;
+  color: var(--text-muted); border-radius: 8px; font-size: .88rem;
+  align-items: center; justify-content: center; gap: 6px; transition: all .2s;
+}
+.sidebar-collapse:hover { color: var(--primary); background: var(--bg); }
+.sidebar-open {
+  display: none; align-items: center; justify-content: center;
+  position: fixed; top: 14px; left: 14px; z-index: 110;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--border);
+  font-size: 1.1rem; color: var(--text); box-shadow: var(--shadow); cursor: pointer;
+}
+@media (min-width: 769px) {
+  .sidebar-collapse { display: flex; }
+  body.nav-collapsed .sidebar-open { display: flex; }
+  body.nav-collapsed { margin-left: 0; }
+  body.nav-collapsed nav { transform: translateX(-100%); }
+}
+
+/* 桌面端隐藏:汉堡按钮 / 关闭按钮 / 遮罩层(移动端用) */
+.hamburger, .nav-close { display: none; background: none; border: none; cursor: pointer; }
+.overlay { display: none; position: fixed; inset: 0; z-index: 95; background: rgba(0,0,0,.35); }
+.overlay.show { display: block; }
+
+/* ---------- Hero ---------- */
+header.hero {
+  padding: 90px 0 70px;
+  text-align: center;
+}
+.avatar {
+  width: 110px; height: 110px; margin: 0 auto 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 2.6rem; font-weight: 700;
+  box-shadow: var(--shadow);
+}
+.hero h1 { font-size: 2.6rem; letter-spacing: .5px; }
+.hero .subtitle { margin-top: 12px; font-size: 1.2rem; color: var(--text-muted); }
+.hero .intro { max-width: 660px; margin: 20px auto 0; color: var(--text-muted); }
+.hero-actions { margin-top: 32px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-block; padding: 12px 28px; border-radius: 999px;
+  font-size: .98rem; font-weight: 600; transition: all .2s; cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ---------- 通用区块 ---------- */
+section { padding: 80px 0; }
+.section-title {
+  text-align: center; font-size: 1.9rem; margin-bottom: 14px; font-weight: 700;
+}
+.section-sub {
+  text-align: center; color: var(--text-muted); max-width: 560px;
+  margin: 0 auto 48px; font-size: .98rem;
+}
+
+/* ---------- 小板块标题(课程建议内) ---------- */
+.sub-title {
+  text-align: center; font-size: 1.35rem; font-weight: 700;
+  margin: 56px 0 8px; letter-spacing: .5px;
+}
+.sub-title:first-of-type { margin-top: 0; }
+.sub-title .num { color: var(--primary); margin-right: 8px; }
+.sub-sub {
+  text-align: center; color: var(--text-muted); max-width: 560px;
+  margin: 0 auto 36px; font-size: .95rem;
+}
+
+/* ---------- 正文:副标题 + 内容 ---------- */
+.plain-text { max-width: 800px; margin: 0 auto; }
+.plain-text h4 {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 1.05rem; font-weight: 700; margin: 22px 0 4px;
+}
+.plain-text h4::before {
+  content: ""; width: 4px; height: 1em; border-radius: 2px;
+  background: var(--primary); flex-shrink: 0;
+}
+.plain-text h4:first-child { margin-top: 0; }
+.plain-text p { margin-bottom: 16px; font-size: .97rem; line-height: 1.9; color: var(--text); }
+
+/* ---------- 页脚 ---------- */
+footer { padding: 32px 0; text-align: center; color: var(--text-muted); font-size: .88rem; border-top: 1px solid var(--border); background: var(--surface); }
+
+/* ---------- 滚动进入动画 ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 768px) {
+  body { margin-left: 0; }
+
+  /* 抽屉式侧边导航 */
+  nav {
+    width: 260px; transform: translateX(-100%);
+    transition: transform .3s ease;
+  }
+  nav.open { transform: translateX(0); box-shadow: 6px 0 24px rgba(0,0,0,.12); }
+  .nav-links { margin-top: 24px; }
+
+  /* 悬浮的打开按钮 */
+  .hamburger {
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; top: 14px; left: 14px; z-index: 110;
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 1.3rem; color: var(--text); box-shadow: var(--shadow);
+  }
+  /* 侧边栏内的关闭按钮 */
+  .nav-close {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 8px;
+    font-size: 1rem; color: var(--text-muted);
+  }
+  .nav-close:hover { color: var(--text); background: var(--bg); }
+
+  header.hero { padding: 100px 0 60px; }
+  .hero h1 { font-size: 2rem; }
+  .section-title { font-size: 1.6rem; }
+}
+
+/* ================= 多页面拆分后新增样式 ================= */
+
+/* 子页面页头 */
+.page-hero { padding: 64px 0 30px; text-align: center; }
+.page-hero h1 { font-size: 2.1rem; letter-spacing: .5px; }
+.page-hero .subtitle { margin-top: 10px; font-size: 1.08rem; color: var(--text-muted); }
+
+/* 子页面正文间距 */
+main section { padding: 40px 0 64px; }
+
+/* 卡片网格(板块导航 / 科目概览 / 课程建议) */
+
+@media (max-width: 768px) {
+  .page-hero { padding: 96px 0 24px; }
+  .page-hero h1 { font-size: 1.7rem; }
+}

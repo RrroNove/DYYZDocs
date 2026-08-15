@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="都匀一中新生生活指南">
-<title>DYYZDocs</title>
+<meta name="description" content="都匀一中新生指南 · 课程建议">
+<title>课程建议 - DYYZDocs</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body><!-- ===== 左侧导航栏 ===== -->
@@ -118,33 +118,65 @@
 <!-- 移动端:打开按钮 + 遮罩;桌面端:侧边栏收起后浮现的展开按钮 -->
 <button class="hamburger" onclick="openNav()" aria-label="打开菜单">☰</button>
 <button class="sidebar-open" onclick="toggleSidebar()" aria-label="展开侧边栏">»</button>
-<div class="overlay" id="overlay" onclick="closeNav()"></div><!-- ===== Hero ===== -->
-<header class="hero" id="top">
+<div class="overlay" id="overlay" onclick="closeNav()"></div><header class="page-hero" id="top">
   <div class="container">
-    <div class="avatar">🎓</div>
-    <h1>欢迎来到都匀一中</h1>
-    <p class="subtitle">DYYZDocs · 新生生活指导与课程建议</p>
-    <p class="intro">为初入都匀一中的你整理的一份学习与生活指南:从报到注册到新高考选科,从食堂宿舍到社团活动,一站式解答你的大多数疑问。</p>
-    <div class="hero-actions">
-      <a href="preread.html" class="btn btn-primary">开始阅读指南</a>
-      <a href="faq.html" class="btn btn-ghost">查看常见问题</a>
-    </div>
+    <h1>课程建议</h1>
+    <p class="subtitle">新高考下,了解科目、学会选科、看懂赋分,才能少走弯路。</p>
   </div>
-</header><!-- ===== 板块导航 ===== -->
-<section id="sections">
+</header><main>
+<section id="courses">
   <div class="container">
-    <h2 class="section-title">板块导航</h2>
-    <p class="section-sub">指南已拆分为独立页面,点击任意卡片即可跳转阅读。</p>
-    <div class="cards">
-      <a class="card" href="preread.html"><h3>看前须知</h3><p>这份指南是给谁的、信息准确性、使用建议。</p></a>
-      <a class="card" href="essentials.html"><h3>新生须知</h3><p>报到、军训、三色衣、课程、选科、分班、考试。</p></a>
-      <a class="card" href="courses.html"><h3>课程建议</h3><p>科目概览、选课建议、赋分制度。</p></a>
-      <a class="card" href="life.html"><h3>校园生活</h3><p>食堂、宿舍、走读、作息、运动、社团、图书馆。</p></a>
-      <a class="card" href="faq.html"><h3>常见问题</h3><p>新生最常问的问题与解答。</p></a>
-      <a class="card" href="about.html"><h3>关于我们</h3><p>加入交流群,随时提问与交流。</p></a>
+
+    <!-- 1. 科目概览 -->
+    <h3 class="sub-title" id="course-subjects"><span class="num">01</span>科目概览 · 9 大学科</h3>
+    <p class="sub-sub">九大科目的学习特点与建议,帮助你快速建立学科认知。</p>
+    <div class="plain-text">
+      <h4 id="sub-yuwen">语文</h4>
+      <p>语言与文字的艺术,积累与表达并重。这门学科靠日积月累,很难临时突击,建议坚持阅读与写作,循序渐进地提升语感与表达能力。</p>
+      <h4 id="sub-shuxue">数学</h4>
+      <p>区分度最高的科目,强调逻辑思维与运算能力。学习上要重视概念理解,做好错题整理与题型归纳,循序渐进地建立知识体系。</p>
+      <h4 id="sub-yingyu">英语</h4>
+      <p>以词汇为基石,听说读写缺一不可。建议坚持每日阅读输入,利用碎片时间积累词汇,听力与口语也要常练不辍。</p>
+      <h4 id="sub-wuli">物理</h4>
+      <p>对抽象思维要求较高,重在理解物理过程与规律。公式不只是记忆,更要会推导、会应用,学习时多从模型和实际场景入手。</p>
+      <h4 id="sub-huaxue">化学</h4>
+      <p>知识点零碎,理解与记忆并重。方程式与实验是常考的重点,建议在理解原理的基础上反复练习,逐步建立清晰的知识网络。</p>
+      <h4 id="sub-shengwu">生物</h4>
+      <p>一门回归教材的学科,细节非常多。概念、图像与过程要反复翻看、及时巩固,扎实的基础是取得高分的前提。</p>
+      <h4 id="sub-zhengzhi">政治</h4>
+      <p>紧密联系时事热点,对术语规范与逻辑条理要求高。学习时要多关注新闻时事,学会用学科语言有条理地分析和表达观点。</p>
+      <h4 id="sub-lishi">历史</h4>
+      <p>重在时间线的梳理与史实的理解,强调材料分析与历史思维。建议按时间轴整理脉络,多读史料,培养"论从史出"的意识。</p>
+      <h4 id="sub-dili">地理</h4>
+      <p>自然与人文相结合,图表题是重点。建议强化图表判读与区域分析的训练,把零散的知识放到具体区域中去理解记忆。</p>
     </div>
+
+    <!-- 2. 选课建议 -->
+    <h3 class="sub-title" id="course-select"><span class="num">02</span>选课建议</h3>
+    <p class="sub-sub">"3+1+2"中,"1"要在物理与历史之间二选一,这是最关键的一步。</p>
+    <div class="plain-text">
+      <h4>物理方向</h4>
+      <p>面向理工、医学、农学等大多有选科要求的专业,适合逻辑思维强、理科基础好的同学。常搭配"物理+化学"这类专业覆盖率高的组合,将来填报志愿时选择面更宽。</p>
+      <h4>历史方向</h4>
+      <p>以人文、社科、语言类专业为主,适合记忆与文字表达有优势的同学。组合选择较为灵活,竞争分布相对均衡,同样能通往不错的专业与高校。</p>
+      <h4>选科原则</h4>
+      <p>贵州省实行新高考"3+1+2"模式。选科前建议结合个人兴趣、优势学科与目标专业方向综合决定,不要盲目跟风"热门组合"。选科一旦确定中途调整成本较高,请认真对待选科宣讲与咨询环节。</p>
+    </div>
+
+    <!-- 3. 赋分制度 -->
+    <h3 class="sub-title" id="course-score"><span class="num">03</span>赋分制度</h3>
+    <p class="sub-sub">只有"再选科目"(政治、地理、化学、生物)按等级赋分计入高考总分。</p>
+    <div class="plain-text">
+      <h4>计分方式</h4>
+      <p>高考中,语文、数学、外语与首选科目(物理或历史)按原始分直接计入总分;只有再选科目(政治、地理、化学、生物)实行等级赋分,依据的是全省考生排名而非卷面分。</p>
+      <h4>等级划分</h4>
+      <p>赋分按排名比例划分为五个等级:前 15% 为 A 档,赋分区间 100~86 分;前 50% 为 B 档,85~71 分;前 85% 为 C 档,70~56 分;前 98% 为 D 档,55~41 分;最后 2% 为 E 档,40~30 分,赋分下限为 30 分。</p>
+      <h4>排名决定赋分</h4>
+      <p>也就是说,赋分结果取决于你在同科考生中的相对位置,而不只是卷面分数。因此选科时也要考虑同科考生的整体水平,合理评估自身优势。以上比例与区间为通用参考,请以贵州省教育考试院最新公布为准。</p>
+    </div>
+
   </div>
-</section><footer>
+</section></main><footer>
   © 2026 DYYZDocs · 为都匀一中新生编写的生活与课程指南
 </footer>
 
