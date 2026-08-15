@@ -81,7 +81,7 @@ $nav = @'
               <li><a href="courses.html#sub-dili">地理</a></li>
             </ul>
           </li>
-          <li><a href="courses.html#course-select">选课建议</a></li>
+          <li><a href="courses.html#course-select">选科建议</a></li>
           <li><a href="courses.html#course-score">赋分制度</a></li>
         </ul>
       </li>
@@ -109,7 +109,6 @@ $nav = @'
           <li><a href="faq.html#faq-report">报到当天需要带什么?</a></li>
           <li><a href="faq.html#faq-military">军训持续多久?</a></li>
           <li><a href="faq.html#faq-dorm">住宿如何分配?</a></li>
-          <li><a href="faq.html#faq-xuanke">新高考如何选科?</a></li>
           <li><a href="faq.html#faq-canteen">食堂如何收费?</a></li>
           <li><a href="faq.html#faq-help">遇到问题找谁?</a></li>
         </ul>
@@ -218,7 +217,7 @@ New-Page -name 'essentials.html' -title '新生须知 - DYYZDocs' -desc '都匀�
   -body $essentialsBody
 
 # ============================================================
-# 3. 课程建议(科目概览 · 选课建议 · 赋分制度 整合页)
+# 3. 课程建议(科目概览 · 选科建议 · 赋分制度 整合页)
 # ============================================================
 $coursesBody = @'
 <section id="courses">
@@ -248,8 +247,8 @@ $coursesBody = @'
       <p>自然与人文相结合,图表题是重点。建议强化图表判读与区域分析的训练,把零散的知识放到具体区域中去理解记忆。</p>
     </div>
 
-    <!-- 2. 选课建议 -->
-    <h3 class="sub-title" id="course-select"><span class="num">02</span>选课建议</h3>
+    <!-- 2. 选科建议 -->
+    <h3 class="sub-title" id="course-select"><span class="num">02</span>选科建议</h3>
     <p class="sub-sub">"3+1+2"中,"1"要在物理与历史之间二选一,这是最关键的一步。</p>
     <div class="plain-text">
       <h4>物理方向</h4>
@@ -321,8 +320,6 @@ $faqBody = @'
       <p>通常为一周左右,具体以学校安排为准。建议准备:防晒霜、水壶、舒适的运动鞋、创可贴、常用药,以及良好的体能储备。</p>
       <h4 id="faq-dorm">住宿如何分配?可以走读吗?</h4>
       <p>宿舍一般按班级/性别集中分配,入住后按床位安排即可。走读政策视学校与年级管理规定而定,有需要可向班主任或政教处咨询申请。</p>
-      <h4 id="faq-xuanke">新高考如何选科?</h4>
-      <p>贵州实行"3+1+2"模式:语数外为必考,再从物理/历史中选择 1 门,从政、地、化、生中选择 2 门。建议结合兴趣、成绩与目标专业的选科要求综合决定。</p>
       <h4 id="faq-canteen">食堂如何收费?可以点外卖吗?</h4>
       <p>通常使用校园卡/饭卡充值消费,价格公开透明。关于外卖与手机使用,各校规定不一,请遵守学校纪律要求,以班主任通知为准。</p>
       <h4 id="faq-help">遇到学习或生活问题可以找谁?</h4>
@@ -387,7 +384,7 @@ $mainBody = @'
     <div class="cards">
       <a class="card" href="preread.html"><h3>看前须知</h3><p>这份指南是给谁的、信息准确性、使用建议。</p></a>
       <a class="card" href="essentials.html"><h3>新生须知</h3><p>报到、军训、三色衣、课程、选科、分班、考试。</p></a>
-      <a class="card" href="courses.html"><h3>课程建议</h3><p>科目概览、选课建议、赋分制度。</p></a>
+      <a class="card" href="courses.html"><h3>课程建议</h3><p>科目概览、选科建议、赋分制度。</p></a>
       <a class="card" href="life.html"><h3>校园生活</h3><p>食堂、宿舍、走读、作息、运动、社团、图书馆。</p></a>
       <a class="card" href="faq.html"><h3>常见问题</h3><p>新生最常问的问题与解答。</p></a>
       <a class="card" href="about.html"><h3>关于我们</h3><p>加入交流群,随时提问与交流。</p></a>
