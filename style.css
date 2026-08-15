@@ -124,6 +124,11 @@ header.hero {
 .hero .subtitle { margin-top: 12px; font-size: 1.2rem; color: var(--text-muted); }
 .hero .intro { max-width: 660px; margin: 20px auto 0; color: var(--text-muted); }
 .hero-actions { margin-top: 32px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.school-aerial {
+  max-width: 760px; width: 100%; margin: 36px auto 0;
+  border-radius: 14px; box-shadow: var(--shadow);
+}
+.school-aerial-cap { margin-top: 10px; font-size: .9rem; color: var(--text-muted); }
 .btn {
   display: inline-block; padding: 12px 28px; border-radius: 999px;
   font-size: .98rem; font-weight: 600; transition: all .2s; cursor: pointer;
