@@ -343,6 +343,8 @@ $aboutBody = @'
         <a class="editor" href="https://github.com/sakiko-in-Rhode" target="_blank" rel="noopener"><img src="https://github.com/sakiko-in-Rhode.png?size=96" alt="sakiko-in-Rhode" loading="lazy"><span>sakiko-in-Rhode</span></a>
         <a class="editor" href="https://github.com/IssacEdlin" target="_blank" rel="noopener"><img src="https://github.com/IssacEdlin.png?size=96" alt="IssacEdlin" loading="lazy"><span>IssacEdlin</span></a>
       </div>
+      <h4>特别感谢</h4>
+      <p>周俊老师</p>
     </div>
   </div>
 </section>
