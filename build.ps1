@@ -393,6 +393,5 @@ $mainBody = @'
 
 $mainHtml = $head.Replace('__TITLE__', 'DYYZDocs').Replace('__DESC__', '都匀一中新生生活指南') + $nav + $mainHero + $mainBody + $foot
 Set-Content -LiteralPath (Join-Path $dir 'index.html') -Value $mainHtml -Encoding utf8
-Set-Content -LiteralPath (Join-Path $dir 'DYYZDocs.html') -Value $mainHtml -Encoding utf8
-Write-Host '生成: index.html / DYYZDocs.html'
+Write-Host '生成: index.html'
 Write-Host '全部页面生成完毕。'

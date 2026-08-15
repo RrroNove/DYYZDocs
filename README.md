@@ -6,7 +6,7 @@
 
 | 文件 | 说明 |
 | --- | --- |
-| `index.html` / `DYYZDocs.html` | 首页(Hero + 板块导航),两者内容相同 |
+| `index.html` | 首页(Hero + 板块导航) |
 | `preread.html` | 看前须知 |
 | `essentials.html` | 新生须知 |
 | `courses.html` | 课程建议(科目概览 9 科 · 选课建议 · 赋分制度,整合单页) |
