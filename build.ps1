@@ -121,7 +121,7 @@ $nav = @'
         </div>
         <ul class="nav-sublinks">
           <li><a href="about.html#au-qqgroup">QQ群</a></li>
-          <li><a href="about.html#au-editor">编辑人QQ</a></li>
+          <li><a href="about.html#au-editor">编辑人</a></li>
         </ul>
       </li>
     </ul>
@@ -344,8 +344,13 @@ $aboutBody = @'
     <div class="plain-text">
       <h4 id="au-qqgroup">QQ群</h4>
       <p>都匀一中新生交流群,群内学长学姐在线答疑,也会同步发布指南更新通知。<br>群号:<b>请填写 QQ 群号</b></p>
-      <h4 id="au-editor">编辑人QQ</h4>
-      <p>本指南由热心同学整理,如有疑问或建议可私聊编辑人。<br>编辑人QQ:<b>请填写编辑人 QQ 号</b></p>
+      <h4 id="au-editor">编辑人</h4>
+      <p>本指南由热心同学整理,如有疑问或建议可私聊编辑人。</p>
+      <div class="editors">
+        <a class="editor" href="https://github.com/Mutsum1-WY" target="_blank" rel="noopener"><img src="https://github.com/Mutsum1-WY.png?size=96" alt="Mutsum1-WY" loading="lazy"><span>Mutsum1-WY</span></a>
+        <a class="editor" href="https://github.com/sakiko-in-Rhode" target="_blank" rel="noopener"><img src="https://github.com/sakiko-in-Rhode.png?size=96" alt="sakiko-in-Rhode" loading="lazy"><span>sakiko-in-Rhode</span></a>
+        <a class="editor" href="https://github.com/IssacEdlin" target="_blank" rel="noopener"><img src="https://github.com/IssacEdlin.png?size=96" alt="IssacEdlin" loading="lazy"><span>IssacEdlin</span></a>
+      </div>
     </div>
   </div>
 </section>
