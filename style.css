@@ -8,7 +8,6 @@
   --accent: #0f9d8f;
   --border: #e6e8ee;
   --shadow: 0 6px 24px rgba(31, 36, 48, .08);
-  --radius: 14px;
   --maxw: 1080px;
 }
 
@@ -173,10 +172,6 @@ section { padding: 80px 0; }
 /* ---------- 页脚 ---------- */
 footer { padding: 32px 0; text-align: center; color: var(--text-muted); font-size: .88rem; border-top: 1px solid var(--border); background: var(--surface); }
 
-/* ---------- 滚动进入动画 ---------- */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-.reveal.visible { opacity: 1; transform: none; }
-
 /* ---------- 响应式 ---------- */
 @media (max-width: 768px) {
   body { margin-left: 0; }
@@ -221,6 +216,37 @@ footer { padding: 32px 0; text-align: center; color: var(--text-muted); font-siz
 main section { padding: 40px 0 64px; }
 
 /* 卡片网格(板块导航 / 科目概览 / 课程建议) */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 28px rgba(31, 36, 48, .14);
+}
+.card h3 {
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.card p {
+  font-size: .92rem;
+  color: var(--text-muted);
+  margin: 0;
+}
 
 @media (max-width: 768px) {
   .page-hero { padding: 96px 0 24px; }

@@ -27,7 +27,7 @@ $nav = @'
 <nav id="sideNav">
   <div class="inner">
     <div class="nav-head">
-      <a href="DYYZDocs.html" class="logo">DYYZ<span>Docs</span></a>
+      <a href="index.html" class="logo">DYYZ<span>Docs</span></a>
       <button class="nav-close" onclick="closeNav()" aria-label="关闭菜单">✕</button>
     </div>
     <div class="nav-tag">都匀一中 · 新生指南</div>
@@ -61,7 +61,7 @@ $nav = @'
       <li class="nav-group open">
         <div class="nav-group-head">
           <a href="courses.html">课程建议</a>
-          <button class="nav-group-toggle" onclick="toggleGroup(this)" aria-label="折叠">▾</button>
+          <button class="nav-group-toggle" onclick="toggleGroup(this)" aria-label="折叠">▸</button>
         </div>
         <ul class="nav-sublinks">
           <li class="nav-group open">
@@ -392,6 +392,7 @@ $mainBody = @'
 '@
 
 $mainHtml = $head.Replace('__TITLE__', 'DYYZDocs').Replace('__DESC__', '都匀一中新生生活指南') + $nav + $mainHero + $mainBody + $foot
+Set-Content -LiteralPath (Join-Path $dir 'index.html') -Value $mainHtml -Encoding utf8
 Set-Content -LiteralPath (Join-Path $dir 'DYYZDocs.html') -Value $mainHtml -Encoding utf8
-Write-Host '生成: DYYZDocs.html'
+Write-Host '生成: index.html / DYYZDocs.html'
 Write-Host '全部页面生成完毕。'
